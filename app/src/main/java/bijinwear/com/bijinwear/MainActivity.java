@@ -3,13 +3,12 @@ package bijinwear.com.bijinwear;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends Activity implements RefreshTimeWizardFragment.OnFragmentInteractionListener {
+public class MainActivity extends Activity {
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
@@ -46,10 +45,5 @@ public class MainActivity extends Activity implements RefreshTimeWizardFragment.
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }
