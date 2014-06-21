@@ -61,13 +61,13 @@ public class MainActivity extends Activity implements RefreshTimeWizardFragment.
     @Override
     public void onFragmentInteraction(Uri uri) {}
 
-    public void onLoad(Bitmap image) {
+    public void onLoad(Bitmap image, String name) {
         ImageView iv = (ImageView) findViewById(R.id.imageView);
         iv.setImageBitmap(image);
 
         int notificationId = 2;
-        String eventTitle = "Title";
-        String eventText = "text";
+        String eventTitle = name;
+        String eventText = "Bijin Wear";
         String extraName = "extraName";
         String extraString = "Tap AndroidWear";
         Intent viewIntent = new Intent(this, MainActivity.class);
@@ -102,8 +102,8 @@ public class MainActivity extends Activity implements RefreshTimeWizardFragment.
         Bijin bj = bijin.get(0);
         String url = bj.getPic();
         // 画像取得
-        // String url = "http://www.bjin.me/images/pic78940.jpg";
-        new ImageDownloadTask(this).execute(url);
+       // String url = "http://www.bjin.me/images/pic78940.jpg";
+        new ImageDownloadTask(this, bj).execute(url);
         // 画像のペンディングインテント
 
     }
