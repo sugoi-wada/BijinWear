@@ -9,7 +9,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,8 @@ public class BijinApi {
 
     public interface BijinCallback {
         void onGetBijin(List<Bijin> bijin);
+
+        void onLostBijin(VolleyError error);
     }
 
     private static final String HOST = "http://bjin.me/api/?";
@@ -37,7 +42,7 @@ public class BijinApi {
      * @param count 欲しい美人の人数
      * @return
      */
-    public static void getBijin(Context context, int count, BijinCallback callback) {
+    public static void getBijin(Context context, int count, final BijinCallback callback) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put(Keys.TYPE, "rand");
         params.put(Keys.COUNT, String.valueOf(count));
@@ -51,11 +56,15 @@ public class BijinApi {
             @Override
             public void onResponse(String response) {
                 Log.d(BijinApi.class.getName(), response);
+                Type listType = new TypeToken<List<Bijin>>() {}.getType();
+                List<Bijin> bijins = new Gson().fromJson(response, listType);
+                callback.onGetBijin(bijins);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                callback.onLostBijin(error);
             }
         }));
     }
