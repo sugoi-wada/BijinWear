@@ -7,65 +7,52 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
+import android.widget.NumberPicker;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WizardFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WizardFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * mNextWizardBtn...次のウィザード画面へ進むボタン
+ * mRefreshTimePicker...更新間隔を決めるNumberPicker
  *
  */
-public class WizardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+public class RefreshTimeWizardFragment extends Fragment {
+    private NumberPicker mRefreshTimePicker;
+    private Button mNextWizardBtn;
+    private static final int MAX_VALUE = 10;
+    private static final int MIN_VALUE = 1;
+    private static final String VALUE = "value";
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WizardFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static WizardFragment newInstance(String param1, String param2) {
-        WizardFragment fragment = new WizardFragment();
+    public static RefreshTimeWizardFragment newInstance() {
+        RefreshTimeWizardFragment fragment = new RefreshTimeWizardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-    public WizardFragment() {
+    public RefreshTimeWizardFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wizard, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mView = inflater.inflate(R.layout.fragment_wizard_refresh_time, container, false);
+        mNextWizardBtn = (Button) mView.findViewById(R.id.nextBtn);
+        mNextWizardBtn.setOnClickListener(new ButtonClickListener());
+        mRefreshTimePicker = (NumberPicker) mView.findViewById(R.id.refreshTimePicker);
+        // Pickerの最大値,最小値のセット
+        mRefreshTimePicker.setMaxValue(MAX_VALUE);
+        mRefreshTimePicker.setMinValue(MIN_VALUE);
+        // 初期値
+        mRefreshTimePicker.setValue(MIN_VALUE);
+
+        return mView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -107,4 +94,13 @@ public class WizardFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    public  class ButtonClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // ここでNumberPickerの現在の値を取得し、値を添えて次のウィザード画面に遷移
+            Bundle extra = new Bundle();
+            extra.putInt(VALUE, mRefreshTimePicker.getValue());
+
+        }
+    }
 }

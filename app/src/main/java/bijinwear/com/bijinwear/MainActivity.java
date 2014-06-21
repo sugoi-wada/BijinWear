@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends Activity implements WizardFragment.OnFragmentInteractionListener {
+public class MainActivity extends Activity implements RefreshTimeWizardFragment.OnFragmentInteractionListener {
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
@@ -20,7 +20,7 @@ public class MainActivity extends Activity implements WizardFragment.OnFragmentI
         mFragmentManager = getFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         // フラグメントをセット
-        mFragmentTransaction.replace(R.id.fragmentContainer, new WizardFragment());
+        mFragmentTransaction.replace(R.id.fragmentContainer, new RefreshTimeWizardFragment());
         // フラグメントへの遷移時にアニメーションをセット
         mFragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         // 変更を適用
