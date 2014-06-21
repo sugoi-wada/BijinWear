@@ -1,8 +1,12 @@
 package bijinwear.com.bijinwear;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preview.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -46,5 +50,24 @@ public class MainActivity extends Activity implements ImageDownloadTask.OnLoadIm
     public void onLoad(Bitmap image) {
         ImageView iv = (ImageView) findViewById(R.id.imageView);
         iv.setImageBitmap(image);
+
+        int notificationId = 2;
+        String eventTitle = "Hello Wear";
+        String eventText = "This is a first application.";
+        String extraName = "extraName";
+        String extraString = "Tap AndroidWear";
+        Intent viewIntent = new Intent(this, MainActivity.class);
+        viewIntent.putExtra(extraName, extraString);
+        PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, 0);
+
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setLargeIcon(image)
+                        .setContentTitle(eventTitle)
+                        .setContentText(eventText)
+                        .setContentIntent(viewPendingIntent);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(notificationId, notificationBuilder.build());
     }
 }
