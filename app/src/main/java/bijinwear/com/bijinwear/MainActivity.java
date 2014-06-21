@@ -13,18 +13,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.android.volley.VolleyError;
 
-public class MainActivity extends Activity implements ImageDownloadTask.OnLoadImageListener {
+import java.util.List;
+
+
+public class MainActivity extends Activity implements ImageDownloadTask.OnLoadImageListener,
+BijinApi.BijinCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 画像取得
-        String url = "http://www.bjin.me/images/pic78940.jpg";
-        new ImageDownloadTask(this).execute(url);
-        // 画像のペンディングインテント
+        BijinApi.getBijin(this, 1, this);
 
     }
 
@@ -80,5 +82,24 @@ public class MainActivity extends Activity implements ImageDownloadTask.OnLoadIm
                         .setMinPriority() // show only on clock
                         .build();
         notificationManager.notify(notificationId, notification);
+    }
+
+    @Override
+    public void onGetBijin(List<Bijin> bijin) {
+        if (bijin.isEmpty())
+            return;
+
+        Bijin bj = bijin.get(0);
+        String url = bj.getPic();
+        // 画像取得
+        //String url = "http://www.bjin.me/images/pic78940.jpg";
+        new ImageDownloadTask(this).execute(url);
+        // 画像のペンディングインテント
+
+    }
+
+    @Override
+    public void onLostBijin(VolleyError error) {
+
     }
 }
