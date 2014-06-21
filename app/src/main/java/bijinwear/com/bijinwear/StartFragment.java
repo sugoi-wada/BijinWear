@@ -8,50 +8,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.NumberPicker;
 
+public class StartFragment extends Fragment {
+    private Boolean mSensorUse;
+    private int mRefreshTimeValue;
+    private Button mStartBtn;
+    private Button mStopBtn;
 
-/**
- * mNextWizardBtn...次のウィザード画面へ進むボタン
- * mRefreshTimePicker...更新間隔を決めるNumberPicker
- *
- */
-public class RefreshTimeWizardFragment extends Fragment {
-    private NumberPicker mRefreshTimePicker;
-    private Button mNextWizardBtn;
-    private static final int MAX_VALUE = 10;
-    private static final int MIN_VALUE = 1;
-    public static final String VALUE = "value";
     private OnFragmentInteractionListener mListener;
-
     // TODO: Rename and change types and number of parameters
-    public static RefreshTimeWizardFragment newInstance() {
-        RefreshTimeWizardFragment fragment = new RefreshTimeWizardFragment();
-        Bundle args = new Bundle();
+    public static StartFragment newInstance(Bundle mBundle) {
+        StartFragment fragment = new StartFragment();
+        Bundle args = mBundle;
         fragment.setArguments(args);
         return fragment;
     }
-    public RefreshTimeWizardFragment() {
+    public StartFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            //mSensorUse = getArguments().getBoolean(null);
+            mRefreshTimeValue = getArguments().getInt(RefreshTimeWizardFragment.VALUE);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_wizard_refresh_time, container, false);
-        mNextWizardBtn = (Button) mView.findViewById(R.id.nextBtn);
-        mNextWizardBtn.setOnClickListener(new ButtonClickListener());
-        mRefreshTimePicker = (NumberPicker) mView.findViewById(R.id.refreshTimePicker);
-        // Pickerの最大値,最小値のセット
-        mRefreshTimePicker.setMaxValue(MAX_VALUE);
-        mRefreshTimePicker.setMinValue(MIN_VALUE);
-        // 初期値
-        mRefreshTimePicker.setValue(MIN_VALUE);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container ,Bundle savedInstanceState) {
+        View mView = inflater.inflate(R.layout.fragment_start,container,false);
+        mStartBtn = (Button) mView.findViewById(R.id.startBtn);
+        mStopBtn = (Button) mView.findViewById(R.id.stopBtn);
 
+        mStartBtn.setOnClickListener(new ClickListner());
+        mStopBtn.setOnClickListener(new ClickListner());
         return mView;
     }
 
@@ -94,15 +86,14 @@ public class RefreshTimeWizardFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-
-    public  class ButtonClickListener implements View.OnClickListener {
+    public class ClickListner implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            // ここでNumberPickerの現在の値を取得し、値を添えて次のウィザード画面に遷移
-            Bundle extra = new Bundle();
-            extra.putInt(VALUE, mRefreshTimePicker.getValue());
-            Fragment mFragment = StartFragment.newInstance(extra);
-            getFragmentManager().beginTransaction().replace(R.id.fragmentContainer,mFragment).commit();
+            if(v.equals(mStartBtn)){
+                // 開始ボタン押した時の処理
+            }else{
+                // 終了ボタンを押した時の処理
+            }
         }
     }
 }

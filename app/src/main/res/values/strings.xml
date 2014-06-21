@@ -4,7 +4,7 @@
     <string name="app_name">BijinWear</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text">通知を開始するには開始ボタンを押す。</string>
     <string name="wizard_fragment_q">通知の更新間隔の設定</string>
 
 </resources>
