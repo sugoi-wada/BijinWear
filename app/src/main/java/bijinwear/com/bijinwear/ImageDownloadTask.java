@@ -19,13 +19,16 @@ import android.widget.ImageView;
 public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
 
     public interface OnLoadImageListener {
-        public void onLoad(Bitmap image);
+        public void onLoad(Bitmap image, String name);
     }
 
     private OnLoadImageListener listener;
+    private Bijin bijin;
 
-	public ImageDownloadTask(OnLoadImageListener listener) {
+	public ImageDownloadTask(OnLoadImageListener listener, Bijin bijin)
+    {
         this.listener = listener;
+        this.bijin = bijin;
 	}
 
 	@Override protected Bitmap doInBackground(String... urls) {
@@ -63,7 +66,7 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
 		}
 		else if (listener != null)
 		{
-            listener.onLoad(result);
+            listener.onLoad(result, bijin.getCategory());
 		}
 	}
 }
