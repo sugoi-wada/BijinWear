@@ -33,7 +33,8 @@ public class BijinApi {
         void onLostBijin(VolleyError error);
     }
 
-    private static final String HOST = "http://bjin.me/api/?";
+    private static final String API_HOST = "http://bjin.me/api/?";
+    private static final String PIC_HOST = "http://bjin.me/images/";
 
     /**
      * 美人を返します。
@@ -50,7 +51,7 @@ public class BijinApi {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        String url = setParams(HOST, params);
+        String url = setParams(API_HOST, params);
 
         queue.add(new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -58,6 +59,11 @@ public class BijinApi {
                 Log.d(BijinApi.class.getName(), response);
                 Type listType = new TypeToken<List<Bijin>>() {}.getType();
                 List<Bijin> bijins = new Gson().fromJson(response, listType);
+
+                for (Bijin bijin : bijins) {
+                    bijin.setPic(PIC_HOST + "pic" + bijin.getId() + ".jpg");
+                }
+
                 callback.onGetBijin(bijins);
             }
         }, new Response.ErrorListener() {

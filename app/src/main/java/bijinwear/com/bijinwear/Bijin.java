@@ -8,6 +8,15 @@ public class Bijin {
     private String link;
     private String category;
     private String thumb;
+    private String pic;
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
 
     public long getId() {
         return id;
