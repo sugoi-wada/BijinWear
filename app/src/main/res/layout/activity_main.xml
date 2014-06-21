@@ -8,9 +8,11 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width= "240dp"
+        android:layout_height= "match_parent"
+        android:orientation="horizontal">
+        </FrameLayout>
 
 </RelativeLayout>
