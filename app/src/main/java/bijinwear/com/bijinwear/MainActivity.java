@@ -1,17 +1,25 @@
 package bijinwear.com.bijinwear;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ImageDownloadTask.OnLoadImageListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 画像取得
+        String url = "http://www.bjin.me/images/71382.jpg";
+        new ImageDownloadTask(this).execute(url);
+        // 画像のペンディングインテント
+
     }
 
 
@@ -32,5 +40,11 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLoad(Bitmap image) {
+        ImageView iv = (ImageView) findViewById(R.id.imageView);
+        iv.setImageBitmap(image);
     }
 }
