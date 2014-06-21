@@ -41,12 +41,12 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
     			Bitmap bitmap = BitmapFactory.decodeStream(in);
     			in.close();
 
-    	    	float times = 1.0f;
+    	    	float times = 1.0f;/*
     	    	if(bitmap.getWidth()>bitmap.getHeight()){//画像が横長の場合 縦幅を横幅に合わせる
     	    		times = 80.0f / bitmap.getWidth();
     	    	}else if(bitmap.getWidth() < bitmap.getHeight()){//画像が縦長の場合、横幅を縦幅に合わせる
     	    		times = 80.0f / bitmap.getHeight();
-    	    	}
+    	    	}*/
     	    	
 				return Bitmap.createScaledBitmap(bitmap , (int)(bitmap.getWidth()*times), (int)(bitmap.getHeight()*times), true);
     		}

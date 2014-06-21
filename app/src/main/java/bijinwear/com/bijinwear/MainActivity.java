@@ -1,11 +1,13 @@
 package bijinwear.com.bijinwear;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preview.support.v4.app.NotificationManagerCompat;
+import android.preview.support.wearable.notifications.WearableNotifications;
 import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +22,7 @@ public class MainActivity extends Activity implements ImageDownloadTask.OnLoadIm
         setContentView(R.layout.activity_main);
 
         // 画像取得
-        String url = "http://www.bjin.me/images/71382.jpg";
+        String url = "http://www.bjin.me/images/pic78940.jpg";
         new ImageDownloadTask(this).execute(url);
         // 画像のペンディングインテント
 
@@ -52,8 +54,8 @@ public class MainActivity extends Activity implements ImageDownloadTask.OnLoadIm
         iv.setImageBitmap(image);
 
         int notificationId = 2;
-        String eventTitle = "Hello Wear";
-        String eventText = "This is a first application.";
+        String eventTitle = "Title";
+        String eventText = "text";
         String extraName = "extraName";
         String extraString = "Tap AndroidWear";
         Intent viewIntent = new Intent(this, MainActivity.class);
@@ -66,8 +68,17 @@ public class MainActivity extends Activity implements ImageDownloadTask.OnLoadIm
                         .setLargeIcon(image)
                         .setContentTitle(eventTitle)
                         .setContentText(eventText)
-                        .setContentIntent(viewPendingIntent);
+                        .setContentIntent(viewPendingIntent)
+                        .setStyle(new NotificationCompat.BigPictureStyle()
+                                .bigPicture(image));
+
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(notificationId, notificationBuilder.build());
+
+        Notification notification =
+                new WearableNotifications.Builder(notificationBuilder)
+                        .setHintHideIcon(true)
+                        .setMinPriority() // show only on clock
+                        .build();
+        notificationManager.notify(notificationId, notification);
     }
 }
