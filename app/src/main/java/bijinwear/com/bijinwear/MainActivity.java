@@ -7,7 +7,6 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preview.support.v4.app.NotificationManagerCompat;
 import android.preview.support.wearable.notifications.WearableNotifications;
@@ -20,8 +19,7 @@ import com.android.volley.VolleyError;
 
 import java.util.List;
 
-public class MainActivity extends Activity implements RefreshTimeWizardFragment.OnFragmentInteractionListener,
-        ImageDownloadTask.OnLoadImageListener, BijinApi.BijinCallback {
+public class MainActivity extends Activity implements ImageDownloadTask.OnLoadImageListener, BijinApi.BijinCallback {
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
@@ -57,9 +55,6 @@ public class MainActivity extends Activity implements RefreshTimeWizardFragment.
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {}
 
     public void onLoad(Bitmap image, String name) {
         ImageView iv = (ImageView) findViewById(R.id.imageView);
@@ -102,7 +97,7 @@ public class MainActivity extends Activity implements RefreshTimeWizardFragment.
         Bijin bj = bijin.get(0);
         String url = bj.getPic();
         // 画像取得
-       // String url = "http://www.bjin.me/images/pic78940.jpg";
+        // String url = "http://www.bjin.me/images/pic78940.jpg";
         new ImageDownloadTask(this, bj).execute(url);
         // 画像のペンディングインテント
 
